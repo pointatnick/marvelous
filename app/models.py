@@ -1,9 +1,11 @@
-from app import db
+class Character:
+    def __init__(self, id=None, name=None):
+        self.id = 0 if id is None else id
+        self.name = "" if name is None else name
 
 
-class Character(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(140), index=True, unique=True)
-
-    def __repr__(self):
-        return "<Character %r>" % (self.name) 
+class Comic:
+    def __init__(self, id=None, title=None, description=None):
+        self.id = 0 if id is None else id
+        self.title = "" if title is None else title
+        self.description = "" if description is None else description
