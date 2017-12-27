@@ -22,19 +22,11 @@ def index():
     pprint(r.json())
     return "Marvelous"
 
-@app.route('/test', methods = ['GET','POST'])
+@app.route('/test')
 def test():
-    print('hello')
-    if request.method == 'POST':
-        print(request.form)
-        hero = request.form['nm']
-        return render_template('results.html', hero = hero )
+    return render_template('test.html')
 
-        # if request.form['form'] == 'nm':
-        #     print('box info?')
-        #     pass
-        # if request.form['form'] == 'Spider-Man':
-        #     print('button pressed')
-        #     pass
-    elif request.method == 'GET':
-        return render_template('test.html')
+@app.route('/results')
+def results():
+    hero = request.args.get('text','')
+    return render_template('results.html', hero = hero)
