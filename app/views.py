@@ -3,6 +3,7 @@ import requests
 import hashlib
 import time
 from pprint import pprint
+from flask import request, render_template, url_for
 
 
 @app.route('/')
@@ -21,3 +22,22 @@ def index():
         'name=Spider-Man&apikey=' + public_key + '&hash=' + m)
     pprint(r.json())
     return "Marvelous"
+
+@app.route('/test', methods = ['GET','POST'])
+def test():
+    print('hello')
+    if request.method == 'POST':
+        print(request.form)
+        hero = request.form['nm']
+        return render_template('results.html', hero = hero )
+
+        # if request.form['form'] == 'nm':
+        #     print('box info?')
+        #     pass
+        # if request.form['form'] == 'Spider-Man':
+        #     print('button pressed')
+        #     pass
+    elif request.method == 'GET':
+        return render_template('test.html')
+
+>>>>>>> Stashed changes
