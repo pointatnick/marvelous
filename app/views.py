@@ -17,7 +17,9 @@ def index():
     m = hashlib.md5(hash_key.encode('utf-8')).hexdigest()
     print(m)
     r = requests.get(
-        'https://gateway.marvel.com:443/v1/public/characters?ts=' + str(ts) +
-        'name=Spider-Man&apikey=' + public_key + '&hash=' + m)
+        'https://gateway.marvel.com:443/v1/public/characters?ts=' + str(ts)
+        + '&apikey=' + public_key
+        + '&hash=' + m
+        + '&name=Spider-Man')
     pprint(r.json())
     return "Marvelous"
