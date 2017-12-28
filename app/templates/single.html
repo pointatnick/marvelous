@@ -1,0 +1,8 @@
+<h1>hello</h1>
+<form action = "{{ url_for('single') }}" method = "GET">
+    <input name = "text" />
+    <input type = "submit" value = "click me" />
+ </form>
+{% if thing is defined %}
+    <p>what's up</p>
+{% endif %}

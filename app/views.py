@@ -26,3 +26,12 @@ def results():
     comic_lists = utils.build_comic_lists(cids)
     comics = utils.find_common_list(comic_lists)
     return render_template('results.html', comics=comics)
+
+
+@app.route('/single')
+def single():
+    character = request.args.get('text','')
+    if (character):
+        return render_template('single.html', thing = character)
+    else:
+        return render_template('single.html')
