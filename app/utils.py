@@ -1,11 +1,18 @@
 def parse_input(input):
     characters = input.split(',')
-    return characters
+    formatted_characters = []
+    for character in characters:
+        temp = character.strip()
+        if temp != '':
+            formatted_characters.append(temp)
+    return formatted_characters
+
 
 def find_common_list(comics_lists):
-    """ returns list of common list given list of list of comics from different heros"""
+    # given a list of a list of comic titles,
+    # returns list of titles in both sets
     comics_sets = []
     for comics in comics_lists:
         comics_sets.append(set(comics))
-    
+
     return set.intersection(*comics_sets)
