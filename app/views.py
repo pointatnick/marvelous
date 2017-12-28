@@ -6,7 +6,6 @@ import hashlib
 import time
 
 
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -22,14 +21,15 @@ def test():
 def results():
     MARVEL_LIMIT = 100
 
-    hero = request.args.get('text', '')
+    characters = utils.parse_input(request.args.get('text', ''))
     public_key = '8bfbc491d6c583ad498640d6fa843487'
     private_key = '0a9946e6e4f1cedbe03d7074f5feca19b33b3757'
     ts = time.time()
     hash_key = str(ts) + private_key + public_key
     m = hashlib.md5(hash_key.encode('utf-8')).hexdigest()
     r1 = requests.get(
-        'https://gateway.marvel.com:443/v1/public/characters?ts={}&apikey={}&hash={}&name={}'.format(str(ts), public_key, m, hero))
+        'https://gateway.marvel.com:443/v1/public/characters?ts={}&apikey={}&hash={}&name={}'.
+        format(str(ts), public_key, m, characters[0]))
     cid = r1.json()['data']['results'][0]['id']
 
     ts = time.time()
