@@ -53,3 +53,12 @@ def results():
             break
     # comics = utils.find_common_list(#list of comics)
     return render_template('results.html', comics=comics)
+
+
+@app.route('/single')
+def single():
+    character = request.args.get('text','')
+    if (character):
+        return render_template('single.html', thing = character)
+    else:
+        return render_template('single.html')
