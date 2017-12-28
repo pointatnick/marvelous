@@ -25,6 +25,7 @@ def results():
 
     comic_lists = utils.build_comic_lists(cids)
     comics = utils.find_common_list(comic_lists)
+    print(comics)
     return render_template('results.html', comics=comics)
 
 

@@ -56,9 +56,11 @@ def get_comic_list(cid):
         offset = offset + MARVEL_LIMIT
         for result in results:
             titles.append(result['title'])
+
+        print(titles, len(titles))
         if count < MARVEL_LIMIT:
             break
-    print(titles)
+    print(titles, len(titles))
     return titles
 
 
