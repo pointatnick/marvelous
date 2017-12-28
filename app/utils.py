@@ -25,7 +25,11 @@ def get_cid(character):
     r = requests.get(
         'https://gateway.marvel.com:443/v1/public/characters?ts={}&apikey={}&hash={}&name={}'.
         format(str(ts), public_key, m, character))
-    return r.json()['data']['results'][0]['id']
+    result = r.json()['data']['results']
+    if result == []:
+        return None
+    else:
+        return result[0]['id']
 
 
 def find_common_list(comics_lists):
