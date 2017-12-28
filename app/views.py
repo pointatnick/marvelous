@@ -1,9 +1,10 @@
 from app import app
+from flask import request, render_template, url_for
+from pprint import pprint
 import requests
+import json
 import hashlib
 import time
-from pprint import pprint
-from flask import request, render_template, url_for
 
 
 @app.route('/')
@@ -14,21 +15,41 @@ def index():
     ts = time.time()
     hash_key = str(ts) + private_key + public_key
     m = hashlib.md5(hash_key.encode('utf-8')).hexdigest()
-    r = requests.get(
-        'https://gateway.marvel.com:443/v1/public/characters?ts=' + str(ts)
-        + '&apikey=' + public_key
-        + '&hash=' + m
-        + '&name=Spider-Man')
-    pprint(r.json())
+    r1 = requests.get(
+        'https://gateway.marvel.com:443/v1/public/characters?ts={}&apikey={}&hash={}&name=Spider-Man'.
+        format(str(ts), public_key, m))
+    cid = r1.json()['data']['results'][0]['id']
+
+    ts = time.time()
+    hash_key = str(ts) + private_key + public_key
+    m = hashlib.md5(hash_key.encode('utf-8')).hexdigest()
+    MARVEL_LIMIT = 100
+    offset = 0
+    titles = []
+    while True:
+        r2 = requests.get(
+            'https://gateway.marvel.com:443/v1/public/characters/{}/comics?ts={}&apikey={}&hash={}&limit={}&offset={}'
+            .format(
+                str(cid), str(ts), public_key, m, str(MARVEL_LIMIT),
+                str(offset)))
+        count = r2.json()['data']['count']
+        results = r2.json()['data']['results']
+        offset = offset + MARVEL_LIMIT
+        for result in results:
+            titles.append(result['title'])
+        print(titles, len(titles))
+        if count < MARVEL_LIMIT:
+            break
     return "Marvelous"
 
-@app.route('/test', methods = ['GET','POST'])
+
+@app.route('/test', methods=['GET', 'POST'])
 def test():
     print('hello')
     if request.method == 'POST':
         print(request.form)
         hero = request.form['nm']
-        return render_template('results.html', hero = hero )
+        return render_template('results.html', hero=hero)
 
         # if request.form['form'] == 'nm':
         #     print('box info?')
