@@ -46,13 +46,13 @@ def get_comic_list(cid):
     offset = 0  # need to keep track of this to request next 100 titles
     titles = []
     while True:
-        r2 = requests.get(
+        r = requests.get(
             'https://gateway.marvel.com:443/v1/public/characters/{}/comics?ts={}&apikey={}&hash={}&limit={}&offset={}'
             .format(
                 str(cid), str(ts), public_key, m, str(MARVEL_LIMIT),
                 str(offset)))
-        count = r2.json()['data']['count']
-        results = r2.json()['data']['results']
+        count = r.json()['data']['count']
+        results = r.json()['data']['results']
         offset = offset + MARVEL_LIMIT
         for result in results:
             titles.append(result['title'])
