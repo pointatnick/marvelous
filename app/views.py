@@ -1,9 +1,10 @@
-from app import app
+from app import app, utils
 from flask import request, render_template, url_for
 import requests
 import json
 import hashlib
 import time
+
 
 
 @app.route('/')
@@ -50,4 +51,5 @@ def results():
         print(titles, len(titles))
         if count < MARVEL_LIMIT:
             break
-    return render_template('results.html', hero=hero)
+    # comics = utils.find_common_list(#list of comics)
+    return render_template('results.html', comics=comics)
